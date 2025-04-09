@@ -1,68 +1,59 @@
-COMPONENT: albireo_tia
-technology,scaling,resolution,action,energy,area,global_cycle_seconds,comment
-7nm,conservative,8,convert|read,0.6,2769,1,energy in pJ;  area in um^2
-7nm,conservative,8,write|update|leak,0,2769,1
-7nm,moderate,8,convert|read,0.3,2769,1,energy in pJ;  area in um^2
-7nm,moderate,8,write|update|leak,0,2769,1
-7nm,aggressive,8,convert|read,0.0375,2769,1,energy in pJ;  area in um^2
-7nm,aggressive,8,write|update|leak,0,2769,1
-
-COMPONENT: albireo_awg
+COMPONENT: lightening_dac
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-7nm,8,compute|read,0,1108089,1,area in um^2; this is an energy-free component
-7nm,8,write|update|leak,0,1108089,1
+65nm,8,convert|read,50000,11000,1,energy in pJ (50 mW @14 GSPS); area in um^2
+65nm,8,write|update|leak,0,11000,1
 
-COMPONENT: dac_albireo
-technology,scaling,resolution,action,energy,area,global_cycle_seconds,comment
-7nm,conservative,8,convert|read,5.2,153,1,energy in pJ;  area in um^2
-7nm,conservative,8,write|update|leak,0,153,1
-7nm,moderate,8,convert|read,2.6,153,1,energy in pJ;  area in um^2
-7nm,moderate,8,write|update|leak,0,153,1
-7nm,aggressive,8,convert|read,0.325,153,1,energy in pJ;  area in um^2
-7nm,aggressive,8,write|update|leak,0,153,1
-
-COMPONENT: albireo_mrr
-technology,scaling,resolution,action,energy,area,global_cycle_seconds,comment
-7nm,conservative,8,compute|read|write|update,0,410,1,energy in pJ;
-7nm,conservative,8,leak,3.1e9,410,1
-7nm,moderate,8,compute|read|write|update,0,410,1,energy in pJ;
-7nm,moderate,8,leak,0.388e9,410,1
-7nm,aggressive,8,compute|read|write|update,0,410,1,energy in pJ;
-7nm,aggressive,8,leak,0.155e9,410,1
-
-COMPONENT: albireo_mzm
-technology,scaling,resolution,action,energy,area,global_cycle_seconds,comment
-7nm,conservative,8,compute|read|write|update,0,15066,1,energy in pJ;
-7nm,conservative,8,leak,11.3e9,15066,1
-7nm,moderate,8,compute|read|write|update,0,15066,1,energy in pJ;
-7nm,moderate,8,leak,1.41e9,15066,1
-7nm,aggressive,8,compute|read|write|update,0,15066,1,energy in pJ;
-7nm,aggressive,8,leak,0.565e9,15066,1
-
-COMPONENT: albireo_sram
-technology,width,depth,action,energy,area,global_cycle_seconds,comment
-7nm,64,262144,read,0.435E+00,637952,1,energy in pJ;  area in um^2 (based on 256 kB of storage and a footprint of 0.0.59×0.34 mm^2)
-7nm,64,262144,write|update,0.435E+00,637952,1,
-7nm,64,262144,leak,0,637952,1,
-
-COMPONENT: albireo_star_coupler
+COMPONENT: lightening_adc
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-7nm,8,compute|read,0,262500,1,area in um^2; this is an energy-free component
-7nm,8,write|update|leak,0,262500,1
+65nm,8,convert|read,14800,2850,1,energy in pJ (14.8 mW @10 GSPS); area in um^2
+65nm,8,write|update|leak,0,2850,1
 
-COMPONENT: albireo_laser
-technology,scaling,resolution,action,energy,area,global_cycle_seconds,comment
-7nm,conservative,8,compute|read|write|update,0,6153,1,energy in pJ;
-7nm,conservative,8,leak,1.94e9,6153,1
-7nm,moderate,8,compute|read|write|update,0,6153,1,energy in pJ;
-7nm,moderate,8,leak,0.0713e9,6153,1
-7nm,aggressive,8,compute|read|write|update,0,6153,1,energy in pJ;
-7nm,aggressive,8,leak,0.0713e9,6153,1
-
-COMPONENT: albireo_photodiode
+COMPONENT: lightening_tia
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-7nm,8,read|write|update|leak,0,9230,1
+65nm,8,read,3000,50,1,energy in pJ (3 mW); area approx 50 um^2
+65nm,8,write|update|leak,0,50,1
 
+COMPONENT: lightening_microdisk
+technology,resolution,action,energy,area,global_cycle_seconds,comment
+65nm,8,read,275,23,1,locking power in pJ; area = 4.8x4.8 um^2
+65nm,8,write|update|leak,0,23,1
 
-reference: {'MRR': 996800.0, 'ADC': 498400.0, 'DAC': 37380.0, 'Cache': 249200.0, 'Photodiode': 249200.0, 'TIA': 124600.0, 'MZM': 4610200.0}
-model: {'MRR': 996300.0, 'ADC': 498746.679723, 'DAC': 37332.0, 'Cache': 78359.375, 'Photodiode': 0, 'TIA': 124605.0, 'MZM': 4610196.0}
+COMPONENT: lightening_microring
+technology,resolution,action,energy,area,global_cycle_seconds,comment
+65nm,8,read,1200,93,1,locking power in pJ; area = 9.66x9.66 um^2
+65nm,8,write|update|leak,0,93,1
+
+COMPONENT: lightening_mzm
+technology,resolution,action,energy,area,global_cycle_seconds,comment
+65nm,8,read,2250,5200,1,tuning power in pJ; area = 260x20 um^2
+65nm,8,write|update|leak,0,5200,1
+
+COMPONENT: lightening_directional_coupler
+technology,resolution,action,energy,area,global_cycle_seconds,comment
+65nm,8,read,0,12,1,insertion loss only; area = 5.25x2.4 um^2
+65nm,8,write|update|leak,0,12,1
+
+COMPONENT: lightening_mems_phase_shifter
+technology,resolution,action,energy,area,global_cycle_seconds,comment
+65nm,8,read,0,4500,1,insertion loss only; area = 100x45 um^2
+65nm,8,write|update|leak,0,4500,1
+
+COMPONENT: lightening_photodetector
+technology,resolution,action,energy,area,global_cycle_seconds,comment
+65nm,8,read,1100,40,1,power in pJ; area = 4x10 um^2
+65nm,8,write|update|leak,0,40,1
+
+COMPONENT: lightening_y_branch
+technology,resolution,action,energy,area,global_cycle_seconds,comment
+65nm,8,read,0,2,1,insertion loss only; area = 1.8x1.3 um^2
+65nm,8,write|update|leak,0,2,1
+
+COMPONENT: lightening_micro_comb
+technology,resolution,action,energy,area,global_cycle_seconds,comment
+65nm,8,read,0,1401856,1,area = 1184x1184 um^2
+65nm,8,write|update|leak,0,1401856,1
+
+COMPONENT: lightening_on_chip_laser
+technology,resolution,action,energy,area,global_cycle_seconds,comment
+65nm,8,read,0,120000,1,wall-plug efficiency = 0.2; area = 400x300 um^2
+65nm,8,write|update|leak,0,120000,1

@@ -1,4 +1,4 @@
-globals_albireo:
+globals_lightening:
   version: 0.4
   environment_variables:
-    ACCELERGY_COMPONENT_LIBRARIES_ALBIREO: "{{find_path('albireo_components')}}"
+    ACCELERGY_COMPONENT_LIBRARIES_LIGHTENING: "{{find_path('lightening_components')}}"

@@ -4,12 +4,12 @@ variables:
   # ===========================================================================
   # Specific to this architecture
   # ===========================================================================
-  N_COLUMNS: 5
-  N_ROWS: 3
-  GLB_DEPTH_SCALE: 1
-  N_PLCU: 3
-  N_PLCG: 9
-  N_STAR_COUPLED_GROUPS_OF_ROWS: 3
+  N_TILES: 4                # N_t
+  N_DPTC_PER_TILE: 2        # N_c
+  N_DPTC: N_TILES * N_DPTC_PER_TILE
+
+  TILING_FACTOR: 4          # N_λ
+  N_WAVELENGTHS: 12         # microcomb wavelengths
 
   # ===========================================================================
   # Set by CiM Processor
@@ -33,15 +33,15 @@ variables:
   # For accuracy model. Can in-array accumulation include signed values?
   # Signed accumulation not compatible with offset encoding (since offset
   # encoding makes values non-negative).
-  SIGNED_SUM_ACROSS_INPUTS: False
+  SIGNED_SUM_ACROSS_INPUTS: True
   SIGNED_SUM_ACROSS_WEIGHTS: True
 
   # ===========================================================================
   # Architecture & CiM Array Structure
   # ===========================================================================
   CIM_UNIT_WIDTH_CELLS:  1
-  CIM_UNIT_DEPTH_CELLS:  1
-  BITS_PER_CELL:         8
+  CIM_UNIT_DEPTH_CELLS:  2
+  BITS_PER_CELL:         4
 
   # ===========================================================================
   # Data Converters
@@ -50,7 +50,7 @@ variables:
   VOLTAGE_DAC_RESOLUTION: 8
   TEMPORAL_DAC_RESOLUTION: 1
   DAC_RESOLUTION: max(VOLTAGE_DAC_RESOLUTION, TEMPORAL_DAC_RESOLUTION)
-  N_ADC_PER_BANK: N_COLUMNS
+  N_ADC_PER_BANK: N_DPTC_PER_TILE
 
   # ===========================================================================
   # Hardware

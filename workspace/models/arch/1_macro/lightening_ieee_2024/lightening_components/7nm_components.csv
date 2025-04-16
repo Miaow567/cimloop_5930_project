@@ -1,59 +1,64 @@
 COMPONENT: lightening_dac
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-65nm,8,convert|read,50000,11000,1,energy in pJ (50 mW @14 GSPS); area in um^2
-65nm,8,write|update|leak,0,11000,1
+14nm,8,convert|read,3.57,11000,1,energy in pJ (50 mW @14 GSPS > 3.57 pJ/sample)
+14nm,8,write|update|leak,0,11000,1
 
 COMPONENT: lightening_adc
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-65nm,8,convert|read,14800,2850,1,energy in pJ (14.8 mW @10 GSPS); area in um^2
-65nm,8,write|update|leak,0,2850,1
+14nm,8,convert|read,1.48,2850,1,energy in pJ (14.8 mW @10 GSPS > 1.48 pJ/sample)
+14nm,8,write|update|leak,0,2850,1
 
 COMPONENT: lightening_tia
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-65nm,8,read,3000,50,1,energy in pJ (3 mW); area approx 50 um^2
-65nm,8,write|update|leak,0,50,1
+14nm,8,convert|read,3,50,1,3 pJ = 3 mW * 1ns
+14nm,8,write|update|leak,0,50,1
 
 COMPONENT: lightening_microdisk
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-65nm,8,read,275,23,1,locking power in pJ; area = 4.8x4.8 um^2
-65nm,8,write|update|leak,0,23,1
+14nm,8,convert|read,0.275,23.04,1,0.275 pJ = 0.275 mW * 1ns; area = 4.8×4.8 µm²
+14nm,8,write|update|leak,0,23.04,1
 
 COMPONENT: lightening_microring
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-65nm,8,read,1200,93,1,locking power in pJ; area = 9.66x9.66 um^2
-65nm,8,write|update|leak,0,93,1
+14nm,8,convert|read,0.21,93.36,1,0.21 pJ = tuning power * 1ns; area = 9.66×9.66 µm²
+14nm,8,write|update|leak,0,93.36,1
 
 COMPONENT: lightening_mzm
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-65nm,8,read,2250,5200,1,tuning power in pJ; area = 260x20 um^2
-65nm,8,write|update|leak,0,5200,1
+14nm,8,convert|read,2.25,5200,1,2.25 pJ = tuning power per bit; area = 260×20 µm²
+14nm,8,write|update|leak,0,5200,1
 
 COMPONENT: lightening_directional_coupler
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-65nm,8,read,0,12,1,insertion loss only; area = 5.25x2.4 um^2
-65nm,8,write|update|leak,0,12,1
+14nm,8,convert|read,0,12.6,1,insertion loss only; area = 5.25×2.4 µm²
+14nm,8,write|update|leak,0,12.6,1
 
 COMPONENT: lightening_mems_phase_shifter
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-65nm,8,read,0,4500,1,insertion loss only; area = 100x45 um^2
-65nm,8,write|update|leak,0,4500,1
+14nm,8,convert|read,0,4500,1,insertion loss only; area = 100×45 µm²
+14nm,8,write|update|leak,0,4500,1
 
 COMPONENT: lightening_photodetector
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-65nm,8,read,1100,40,1,power in pJ; area = 4x10 um^2
-65nm,8,write|update|leak,0,40,1
+14nm,8,convert|read,1.1,40,1,1.1 pJ = 1.1 mW * 1ns; area = 4×10 µm²
+14nm,8,write|update|leak,0,40,1
 
 COMPONENT: lightening_y_branch
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-65nm,8,read,0,2,1,insertion loss only; area = 1.8x1.3 um^2
-65nm,8,write|update|leak,0,2,1
+14nm,8,convert|read,0,2.34,1,insertion loss only; area = 1.8×1.3 µm²
+14nm,8,write|update|leak,0,2.34,1
 
 COMPONENT: lightening_micro_comb
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-65nm,8,read,0,1401856,1,area = 1184x1184 um^2
-65nm,8,write|update|leak,0,1401856,1
+14nm,8,convert|read,0,1401856,1,static power assumed to be included in laser; area = 1184×1184 µm²
+14nm,8,write|update|leak,0,1401856,1
 
 COMPONENT: lightening_on_chip_laser
 technology,resolution,action,energy,area,global_cycle_seconds,comment
-65nm,8,read,0,120000,1,wall-plug efficiency = 0.2; area = 400x300 um^2
-65nm,8,write|update|leak,0,120000,1
+14nm,8,convert|read,250,120000,1,250 pJ = 250 mW * 1ns @ wall-plug eff = 0.2; area = 400×300 µm²
+14nm,8,write|update|leak,0,120000,1
+
+COMPONENT: lightening_accum
+technology,resolution,action,energy,area,global_cycle_seconds,comment
+14nm,8,convert|read,0,90,1,dummy read to satisfy Accelergy
+14nm,8,write|update|leak,0,90,1

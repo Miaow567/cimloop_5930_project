@@ -10,8 +10,8 @@ variables:
   # ===========================================================================
   ## Workload -----------------------------------------------------------------
   WEIGHT_BITS: 8
-  INPUT_BITS:  8
-  OUTPUT_BITS: 8
+  INPUT_BITS:  12
+  OUTPUT_BITS: 12
   BATCH_SIZE:  64
 
   # Set by CiM processor if these values are available in the workload.

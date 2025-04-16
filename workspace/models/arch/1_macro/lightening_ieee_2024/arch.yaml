@@ -18,7 +18,7 @@ architecture:
     subclass: sram
     attributes:
       depth: 2097152
-      width: 128
+      width: 64
       datawidth: 4
       n_banks: 32
     constraints:
@@ -30,7 +30,7 @@ architecture:
   - !Component
     name: weight_modulator
     <<<: [*component_defaults, *keep_weights, *no_temporal_reuse]
-    subclass: modulator
+    subclass: lightening_mzm
     attributes:
       width: ENCODED_WEIGHT_BITS
       n_instances: N_DPTC * N_WAVELENGTHS
@@ -38,7 +38,7 @@ architecture:
   - !Component
     name: weight_dac
     <<<: [*component_defaults, *keep_weights, *no_coalesce]
-    subclass: dac
+    subclass: lightening_dac
     attributes:
       width: ENCODED_WEIGHT_BITS
       n_instances: N_DPTC * TILING_FACTOR
@@ -80,17 +80,17 @@ architecture:
   # ====================================================
   # e/o path
   # ====================================================
-  - !Component
-    name: data_buffer
-    <<<: [*component_defaults, *keep_inputs, *no_coalesce]
-    subclass: buffer
-    attributes:
-      width: ENCODED_INPUT_BITS
-  
+  # - !Component
+  #   name: data_buffer
+  #   <<<: [*component_defaults, *keep_inputs, *no_coalesce]
+  #   subclass: buffer
+  #   attributes:
+  #     width: ENCODED_INPUT_BITS
+
   - !Component
     name: input_dac
     <<<: [*component_defaults, *keep_inputs, *no_coalesce]
-    subclass: dac
+    subclass: lightening_dac
     attributes:
       width: ENCODED_INPUT_BITS
       n_instances: N_DPTC * TILING_FACTOR
@@ -98,7 +98,7 @@ architecture:
   - !Component
     name: input_modulator
     <<<: [*component_defaults, *keep_inputs, *no_temporal_reuse]
-    subclass: modulator
+    subclass: lightening_mzm
     attributes:
       width: ENCODED_INPUT_BITS
       n_instances: N_DPTC * N_WAVELENGTHS
@@ -106,7 +106,7 @@ architecture:
   - !Component
     name: laser_source
     <<<: [*component_defaults, *keep_inputs, *keep_weights, *no_coalesce]
-    subclass: laser
+    subclass: lightening_on_chip_laser
     attributes:
       width: ENCODED_INPUT_BITS * N_WAVELENGTHS
       multi_wavelength: true
@@ -114,7 +114,7 @@ architecture:
   - !Component
     name: micro_comb
     <<<: [*component_defaults, *keep_inputs, *keep_weights, *no_coalesce]
-    subclass: comb
+    subclass: lightening_micro_comb
     attributes:
       width: ENCODED_INPUT_BITS
       n_wavelengths: N_WAVELENGTHS
@@ -135,7 +135,7 @@ architecture:
   - !Component
     name: optical_awg
     <<<: [*component_defaults, *keep_weights, *no_coalesce]
-    subclass: awg
+    subclass: lightening_directional_coupler
     attributes:
       width: 16
 
@@ -145,27 +145,25 @@ architecture:
   - !Component
     name: accumulation_unit
     <<<: [*component_defaults, *keep_outputs, *no_coalesce]
-    subclass: accum
-    attributes:
-      width: ENCODED_OUTPUT_BITS
-      n_instances: N_DPTC
-      
-  - !Component
-    name: output_adc
-    <<<: [*component_defaults, *keep_outputs, *no_coalesce]
-    subclass: adc
+    subclass: lightening_accum
     attributes:
       width: ENCODED_OUTPUT_BITS
       n_instances: N_DPTC
 
   - !Component
+    name: output_adc
+    <<<: [*component_defaults, *keep_outputs, *no_coalesce]
+    subclass: lightening_adc
+    attributes: {<<<: *cim_component_attributes}
+
+  - !Component
     name: photodetector_array
     <<<: [*component_defaults, *keep_outputs, *no_coalesce]
-    subclass: photodiode
+    subclass: lightening_photodetector
     attributes:
       width: ENCODED_OUTPUT_BITS
       n_instances: N_DPTC
-      
+
   # ====================================================
   - !Hierarchical
     nodes: *virtualized_mac

@@ -17,7 +17,7 @@ architecture:
     <<<: [*component_defaults, *keep_inputs, *keep_outputs, *keep_weights]
     subclass: sram
     attributes:
-      depth: 2097152
+      depth: 5242880
       width: 64
       datawidth: 4
       n_banks: 32
@@ -61,7 +61,7 @@ architecture:
     <<<: [*component_defaults, *keep_inputs]
     subclass: sram
     attributes:
-      depth: 4096
+      depth: 655360
       width: 64
       datawidth: 8
 

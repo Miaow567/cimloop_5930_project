@@ -1,61 +1,32 @@
 variables:
-  version: 0.4
-  CIM_ARCHITECTURE: True
-  # ===========================================================================
-  # Specific to this architecture
-  # ===========================================================================
-  N_TILES: 4                # N_t
-  N_DPTC_PER_TILE: 2        # N_c
-  N_DPTC: N_TILES * N_DPTC_PER_TILE
-
-  TILING_FACTOR: 4          # N_λ
-  N_WAVELENGTHS: 12         # microcomb wavelengths
-
-  # ===========================================================================
-  # Set by CiM Processor
-  # ===========================================================================
-  ARRAY_WORDLINES:        Should have been set by ArrayProcessor.
-  ARRAY_BITLINES:         Should have been set by ArrayProcessor.
-  ARRAY_PARALLEL_INPUTS:  Should have been set by ArrayProcessor.
+  ADC_RESOLUTION: 8
+  ARRAY_BITLINES: Should have been set by ArrayProcessor.
+  ARRAY_PARALLEL_INPUTS: Should have been set by ArrayProcessor.
   ARRAY_PARALLEL_OUTPUTS: Should have been set by ArrayProcessor.
   ARRAY_PARALLEL_WEIGHTS: Should have been set by ArrayProcessor.
-
-  # ===========================================================================
-  # Encoding-dependent parameters
-  # ===========================================================================
-  ENCODED_INPUT_BITS:  INPUT_BITS # xnor takes an extra bit
-  ENCODED_WEIGHT_BITS: WEIGHT_BITS
-  ENCODED_OUTPUT_BITS: OUTPUT_BITS
-
-  INPUT_ENCODING_FUNC: offset_encode_hist
-  WEIGHT_ENCODING_FUNC: two_part_magnitude_encode_if_signed_hist
-
-  # For accuracy model. Can in-array accumulation include signed values?
-  # Signed accumulation not compatible with offset encoding (since offset
-  # encoding makes values non-negative).
-  SIGNED_SUM_ACROSS_INPUTS: True
-  SIGNED_SUM_ACROSS_WEIGHTS: True
-
-  # ===========================================================================
-  # Architecture & CiM Array Structure
-  # ===========================================================================
-  CIM_UNIT_WIDTH_CELLS:  1
-  CIM_UNIT_DEPTH_CELLS:  2
-  BITS_PER_CELL:         4
-
-  # ===========================================================================
-  # Data Converters
-  # ===========================================================================
-  ADC_RESOLUTION: 8
-  VOLTAGE_DAC_RESOLUTION: 8
-  TEMPORAL_DAC_RESOLUTION: 1
+  ARRAY_WORDLINES: Should have been set by ArrayProcessor.
+  BASE_LATENCY: 2.0e-10
+  BITS_PER_CELL: 4
+  CIM_ARCHITECTURE: true
+  CIM_UNIT_DEPTH_CELLS: 2
+  CIM_UNIT_WIDTH_CELLS: 1
   DAC_RESOLUTION: max(VOLTAGE_DAC_RESOLUTION, TEMPORAL_DAC_RESOLUTION)
-  N_ADC_PER_BANK: N_DPTC_PER_TILE
-
-  # ===========================================================================
-  # Hardware
-  # ===========================================================================
-  BASE_LATENCY: 0.2E-9 # ns per cycle
-  LATENCY_SCALING_SCALE: 0.625 if scaling == "aggressive" else 1
+  ENCODED_INPUT_BITS: INPUT_BITS
+  ENCODED_OUTPUT_BITS: OUTPUT_BITS
+  ENCODED_WEIGHT_BITS: WEIGHT_BITS
   GLOBAL_CYCLE_SECONDS: BASE_LATENCY * LATENCY_SCALING_SCALE * VOLTAGE_LATENCY_SCALE
+  INPUT_ENCODING_FUNC: offset_encode_hist
+  LATENCY_SCALING_SCALE: 0.625
+  N_ADC_PER_BANK: N_DPTC_PER_TILE
+  N_DPTC: N_TILES * N_DPTC_PER_TILE
+  N_DPTC_PER_TILE: 2
+  N_TILES: 4
+  N_WAVELENGTHS: 12
   READ_PULSE_WIDTH: GLOBAL_CYCLE_SECONDS
+  SIGNED_SUM_ACROSS_INPUTS: true
+  SIGNED_SUM_ACROSS_WEIGHTS: true
+  TEMPORAL_DAC_RESOLUTION: 1
+  TILING_FACTOR: 4
+  VOLTAGE_DAC_RESOLUTION: 8
+  WEIGHT_ENCODING_FUNC: two_part_magnitude_encode_if_signed_hist
+  version: 0.4

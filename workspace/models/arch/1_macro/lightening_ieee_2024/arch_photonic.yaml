@@ -1,6 +1,6 @@
 {{include_text('defines.yaml')}}
 
-## DIGITAL
+## PHOTONIC
 
 architecture:
   nodes: &macro # TOP MACRO
@@ -30,19 +30,26 @@ architecture:
         permutation: [N, P, Q, M, C, R, S]
 
   - !Component
-    name: weight_buffer
+    name: weight_modulator
     <<<: [*component_defaults, *keep_weights, *no_temporal_reuse]
-    subclass: sram
+    subclass: lightening_mzm
     attributes:
-      depth: 65536
       width: ENCODED_WEIGHT_BITS
-      n_banks: N_DPTC * N_WAVELENGTHS
+      n_instances: N_DPTC * N_WAVELENGTHS
+
+  - !Component
+    name: weight_dac
+    <<<: [*component_defaults, *keep_weights, *no_coalesce]
+    subclass: lightening_dac
+    attributes:
+      width: ENCODED_WEIGHT_BITS
+      n_instances: N_DPTC * TILING_FACTOR
 
   # ====================================================
   # tile hierarchy
   # ====================================================
   - !ArrayContainer
-    name: digital_tile
+    name: photonic_tile
     <<<: [*container_defaults]
     spatial: {meshX: N_TILES}
     constraints:
@@ -73,10 +80,52 @@ architecture:
       temporal: {factors_only: []}
 
   # ====================================================
-  # digital compute units (replacing DPTC)
+  # e/o path
+  # ====================================================
+  # - !Component
+  #   name: data_buffer
+  #   <<<: [*component_defaults, *keep_inputs, *no_coalesce]
+  #   subclass: buffer
+  #   attributes:
+  #     width: ENCODED_INPUT_BITS
+
+  - !Component
+    name: input_dac
+    <<<: [*component_defaults, *keep_inputs, *no_coalesce]
+    subclass: lightening_dac
+    attributes:
+      width: ENCODED_INPUT_BITS
+      n_instances: N_DPTC * TILING_FACTOR
+
+  - !Component
+    name: input_modulator
+    <<<: [*component_defaults, *keep_inputs, *no_temporal_reuse]
+    subclass: lightening_mzm
+    attributes:
+      width: ENCODED_INPUT_BITS
+      n_instances: N_DPTC * N_WAVELENGTHS
+
+  - !Component
+    name: laser_source
+    <<<: [*component_defaults, *keep_inputs, *keep_weights, *no_coalesce]
+    subclass: lightening_on_chip_laser
+    attributes:
+      width: ENCODED_INPUT_BITS * N_WAVELENGTHS
+      multi_wavelength: true
+
+  - !Component
+    name: micro_comb
+    <<<: [*component_defaults, *keep_inputs, *keep_weights, *no_coalesce]
+    subclass: lightening_micro_comb
+    attributes:
+      width: ENCODED_INPUT_BITS
+      n_wavelengths: N_WAVELENGTHS
+
+  # ====================================================
+  # photonic compute (DPTC)
   # ====================================================
   - !ArrayContainer
-    name: digital_compute_unit
+    name: dptc
     <<<: [*container_defaults]
     spatial: {meshY: N_DPTC_PER_TILE}
     constraints:
@@ -85,48 +134,34 @@ architecture:
         no_reuse: [Inputs, Weights]
         no_iteration_over_dataspaces: [Outputs]
 
-  # ====================================================
-  # input processing path
-  # ====================================================
   - !Component
-    name: input_buffer
-    <<<: [*component_defaults, *keep_inputs, *no_coalesce]
-    subclass: sram
+    name: optical_awg
+    <<<: [*component_defaults, *keep_weights, *no_coalesce]
+    subclass: lightening_directional_coupler
     attributes:
-      depth: 2048
-      width: ENCODED_INPUT_BITS
-      n_banks: N_DPTC * TILING_FACTOR
+      width: 16
 
   # ====================================================
-  # digital compute (replacing photonic multipliers)
+  # o/e path
   # ====================================================
-  - !Component
-    name: digital_multiplier
-    <<<: [*component_defaults, *keep_inputs, *keep_weights, *no_coalesce]
-    subclass: aladdin_multiplier
-    attributes:
-      datawidth: ENCODED_INPUT_BITS
-      width: ENCODED_INPUT_BITS
-      width_a: ENCODED_INPUT_BITS
-      width_b: ENCODED_WEIGHT_BITS
-      n_instances: N_DPTC * N_WAVELENGTHS
-
-  # ====================================================
-  # digital adder tree (replacing photodetection/accumulation)
-  # ====================================================
-  - !Component
-    name: adder_tree
-    <<<: [*component_defaults, *keep_outputs, *no_coalesce]
-    subclass: intadder_tree
-    attributes:
-      n_bits: ENCODED_OUTPUT_BITS
-      n_adder_tree_inputs: N_WAVELENGTHS
-      n_instances: N_DPTC
-
   - !Component
     name: accumulation_unit
     <<<: [*component_defaults, *keep_outputs, *no_coalesce]
-    subclass: aladdin_adder
+    subclass: lightening_accum
+    attributes:
+      width: ENCODED_OUTPUT_BITS
+      n_instances: N_DPTC
+
+  - !Component
+    name: output_adc
+    <<<: [*component_defaults, *keep_outputs, *no_coalesce]
+    subclass: lightening_adc
+    attributes: {<<<: *cim_component_attributes}
+
+  - !Component
+    name: photodetector_array
+    <<<: [*component_defaults, *keep_outputs, *no_coalesce]
+    subclass: lightening_photodetector
     attributes:
       width: ENCODED_OUTPUT_BITS
       n_instances: N_DPTC

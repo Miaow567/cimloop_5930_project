@@ -1,0 +1,159 @@
+{{include_text('defines.yaml')}}
+
+architecture:
+  nodes: &macro # TOP MACRO
+  # ===========================================================================
+  - !Container # Macro top-level
+    name: macro
+    <<<: [*container_defaults]
+    attributes:
+      technology: TECHNOLOGY
+
+  # ====================================================
+  # global memory
+  # ====================================================
+  - !Component
+    name: global_buffer
+    <<<: [*component_defaults, *keep_inputs, *keep_outputs, *keep_weights]
+    subclass: sram
+    attributes:
+      depth: 5242880
+      width: 64
+      datawidth: 4
+      n_banks: 32
+    constraints:
+      dataspace: {keep_only: [Inputs, Weights, Outputs]}
+      temporal:
+        factors_only: [M=-1, N=-1, C=-1, P=-1, Q=-1, R=-1, S=-1]
+        permutation: [N, P, Q, M, C, R, S]
+
+  - !Component
+    name: weight_modulator
+    <<<: [*component_defaults, *keep_weights, *no_temporal_reuse]
+    subclass: lightening_mzm
+    attributes:
+      width: ENCODED_WEIGHT_BITS
+      n_instances: N_DPTC * N_WAVELENGTHS
+
+  - !Component
+    name: weight_dac
+    <<<: [*component_defaults, *keep_weights, *no_coalesce]
+    subclass: lightening_dac
+    attributes:
+      width: ENCODED_WEIGHT_BITS
+      n_instances: N_DPTC * TILING_FACTOR
+
+  # ====================================================
+  # tile hierarchy
+  # ====================================================
+  - !ArrayContainer
+    name: photonic_tile
+    <<<: [*container_defaults]
+    spatial: {meshX: N_TILES}
+    constraints:
+      spatial:
+        maximize_dims: [N]
+        no_reuse: [Inputs]
+        no_iteration_over_dataspaces: [Weights]
+
+  - !Component
+    name: tile_buffer
+    <<<: [*component_defaults, *keep_inputs]
+    subclass: sram
+    attributes:
+      depth: 655360
+      width: 64
+      datawidth: 8
+
+  - !Component
+    name: activation_buffer
+    <<<: [*component_defaults, *keep_outputs]
+    subclass: sram
+    attributes:
+      depth: 1024
+      width: ENCODED_OUTPUT_BITS * N_WAVELENGTHS
+      datawidth: 8
+    constraints:
+      dataspace: {keep_only: [Outputs]}
+      temporal: {factors_only: []}  # No temporal accumulation
+
+  # ====================================================
+  # e/o path
+  # ====================================================
+  - !Component
+    name: input_dac
+    <<<: [*component_defaults, *keep_inputs, *no_coalesce]
+    subclass: lightening_dac
+    attributes:
+      width: ENCODED_INPUT_BITS
+      n_instances: N_DPTC * TILING_FACTOR
+
+  - !Component
+    name: input_modulator
+    <<<: [*component_defaults, *keep_inputs, *no_temporal_reuse]
+    subclass: lightening_mzm
+    attributes:
+      width: ENCODED_INPUT_BITS
+      n_instances: N_DPTC * N_WAVELENGTHS
+
+  - !Component
+    name: laser_source
+    <<<: [*component_defaults, *keep_inputs, *keep_weights, *no_coalesce]
+    subclass: lightening_on_chip_laser
+    attributes:
+      width: ENCODED_INPUT_BITS * N_WAVELENGTHS
+      multi_wavelength: true
+
+  - !Component
+    name: micro_comb
+    <<<: [*component_defaults, *keep_inputs, *keep_weights, *no_coalesce]
+    subclass: lightening_micro_comb
+    attributes:
+      width: ENCODED_INPUT_BITS
+      n_wavelengths: N_WAVELENGTHS
+
+  # ====================================================
+  # photonic compute (DPTC)
+  # ====================================================
+  - !ArrayContainer
+    name: dptc
+    <<<: [*container_defaults]
+    spatial: {meshY: N_DPTC_PER_TILE}
+    constraints:
+      spatial:
+        maximize_dims: [C, R, S]
+        no_reuse: [Inputs, Weights]
+        no_iteration_over_dataspaces: [Outputs]
+
+  - !Component
+    name: optical_awg
+    <<<: [*component_defaults, *keep_weights, *no_coalesce]
+    subclass: lightening_directional_coupler
+    attributes:
+      width: 16
+
+  # ====================================================
+  # o/e path (modified for digital-only accumulation)
+  # ====================================================
+  - !Component
+    name: output_adc
+    <<<: [*component_defaults, *keep_outputs, *no_coalesce]
+    subclass: lightening_adc
+    attributes:
+      n_instances: N_DPTC * N_WAVELENGTHS
+      temporal_accumulation_depth: 1  # Immediate digitization
+    constraints:
+      temporal: {factors_only: []}  # No temporal factors
+
+  - !Component
+    name: photodetector_array
+    <<<: [*component_defaults, *keep_outputs, *no_coalesce]
+    subclass: lightening_photodetector
+    attributes:
+      width: ENCODED_OUTPUT_BITS
+      n_instances: N_DPTC
+      enable_temporal_integration: false  # Disable analog accumulation
+
+  # ====================================================
+  - !Hierarchical
+    nodes: *virtualized_mac

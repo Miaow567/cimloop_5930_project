@@ -1,5 +1,7 @@
 {{include_text('defines.yaml')}}
 
+## DISABLE OPERAND SHARING
+
 architecture:
   nodes: &macro # TOP MACRO
   # ===========================================================================

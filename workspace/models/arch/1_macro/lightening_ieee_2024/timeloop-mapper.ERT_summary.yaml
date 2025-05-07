@@ -1,0 +1,336 @@
+ERT_summary:
+    version: '0.4'
+    table_summary:
+      - name: system_top_level.global_buffer[1..1]
+        actions:
+          - name: write
+            energy: 150.374
+          - name: read
+            energy: 158.107
+          - name: leak
+            energy: 0.363102
+          - name: update
+            energy: 150.374
+        primitive_estimation(s):
+          - name: system_top_level.global_buffer[1..1]
+            estimator: CactiSRAM
+      - name: system_top_level.tile_buffer[1..4]
+        actions:
+          - name: write
+            energy: 2.41728
+          - name: read
+            energy: 2.96151
+          - name: leak
+            energy: 0.000433217
+          - name: update
+            energy: 2.41728
+        primitive_estimation(s):
+          - name: system_top_level.tile_buffer[1..4]
+            estimator: CactiSRAM
+      - name: system_top_level.tile_laser_source[1..4]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 4.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.tile_laser_source[1..4]
+            estimator: Library
+      - name: system_top_level.tile_micro_comb[1..4]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 0.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.tile_micro_comb[1..4]
+            estimator: Library
+      - name: system_top_level.data_buffer[1..8]
+        actions:
+          - name: write
+            energy: 0.206104
+          - name: read
+            energy: 0.115375
+          - name: leak
+            energy: 2.2541e-05
+          - name: update
+            energy: 0.206104
+        primitive_estimation(s):
+          - name: system_top_level.data_buffer[1..8]
+            estimator: CactiSRAM
+      - name: system_top_level.input_dac[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 400.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.input_dac[1..8]
+            estimator: Library
+      - name: system_top_level.pe_cluster_laser_source[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 4.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.pe_cluster_laser_source[1..8]
+            estimator: Library
+      - name: system_top_level.pe_cluster_micro_comb[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 0.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.pe_cluster_micro_comb[1..8]
+            estimator: Library
+      - name: system_top_level.input_modulator[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 400.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.input_modulator[1..8]
+            estimator: Library
+      - name: system_top_level.input_y_branch_splitter[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 0.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.input_y_branch_splitter[1..8]
+            estimator: Library
+      - name: system_top_level.weight_buffer[1..8]
+        actions:
+          - name: write
+            energy: 0.174044
+          - name: read
+            energy: 0.097428
+          - name: leak
+            energy: 1.50273e-05
+          - name: update
+            energy: 0.174044
+        primitive_estimation(s):
+          - name: system_top_level.weight_buffer[1..8]
+            estimator: CactiSRAM
+      - name: system_top_level.weight_dac[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 400.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.weight_dac[1..8]
+            estimator: Library
+      - name: system_top_level.weight_modulator[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 400.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.weight_modulator[1..8]
+            estimator: Library
+      - name: system_top_level.weight_y_branch_splitter[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 0.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.weight_y_branch_splitter[1..8]
+            estimator: Library
+      - name: system_top_level.phase_shifter[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 0.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.phase_shifter[1..8]
+            estimator: Library
+      - name: system_top_level.directional_coupler[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 0.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.directional_coupler[1..8]
+            estimator: Library
+      - name: system_top_level.photodetector_array[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 1.1
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.photodetector_array[1..8]
+            estimator: Library
+      - name: system_top_level.tia_array[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 300.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.tia_array[1..8]
+            estimator: Library
+      - name: system_top_level.output_adc[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 250.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.output_adc[1..8]
+            estimator: Library
+      - name: system_top_level.accumulation_unit[1..8]
+        actions:
+          - name: write
+            energy: 0.0
+          - name: read
+            energy: 0.0
+          - name: leak
+            energy: 0.0
+          - name: update
+            energy: 0.0
+        primitive_estimation(s):
+          - name: system_top_level.accumulation_unit[1..8]
+            estimator: Library
+      - name: system_top_level.activation_buffer[1..8]
+        actions:
+          - name: write
+            energy: 3.64593
+          - name: read
+            energy: 3.51114
+          - name: leak
+            energy: 0.000259152
+          - name: update
+            energy: 3.64593
+        primitive_estimation(s):
+          - name: system_top_level.activation_buffer[1..8]
+            estimator: CactiSRAM
+      - name: system_top_level.dummy_top[1..1]
+        actions:
+          - name: read
+            energy: 0
+          - name: write
+            energy: 0
+          - name: leak
+            energy: 0
+          - name: update
+            energy: 0
+        primitive_estimation(s): []
+      - name: system_top_level.inter_photonic_tile_spatial[1..1]
+        actions:
+          - name: read
+            energy: 0
+          - name: write
+            energy: 0
+          - name: leak
+            energy: 0
+          - name: update
+            energy: 0
+        primitive_estimation(s): []
+      - name: system_top_level.inter_dptc_spatial[1..4]
+        actions:
+          - name: read
+            energy: 0
+          - name: write
+            energy: 0
+          - name: leak
+            energy: 0
+          - name: update
+            energy: 0
+        primitive_estimation(s): []
+      - name: system_top_level.inter_1bit_x_1bit_mac_spatial[1..8]
+        actions:
+          - name: read
+            energy: 0
+          - name: write
+            energy: 0
+          - name: leak
+            energy: 0
+          - name: update
+            energy: 0
+        primitive_estimation(s): []
+      - name: system_top_level.here_to_fix_a_bug[1..3072]
+        actions:
+          - name: read
+            energy: 0
+          - name: write
+            energy: 0
+          - name: leak
+            energy: 0
+          - name: update
+            energy: 0
+        primitive_estimation(s): []
+      - name: system_top_level.virtual_bitwise_mac[1..3072]
+        actions:
+          - name: compute
+            energy: 0
+        primitive_estimation(s): []

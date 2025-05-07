@@ -26,7 +26,7 @@ variables:
   SIGNED_SUM_ACROSS_INPUTS: true
   SIGNED_SUM_ACROSS_WEIGHTS: true
   TEMPORAL_DAC_RESOLUTION: 1
-  TILING_FACTOR: 4
+  TILING_FACTOR: 1
   VOLTAGE_DAC_RESOLUTION: 8
   WEIGHT_ENCODING_FUNC: two_part_magnitude_encode_if_signed_hist
   version: 0.4

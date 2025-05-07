@@ -1,5 +1,7 @@
 {{include_text('defines.yaml')}}
 
+## DISABLE ANALOG ACCUMULATION
+
 architecture:
   nodes: &macro # TOP MACRO
   # ===========================================================================

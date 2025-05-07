@@ -90,12 +90,12 @@ architecture:
   # ====================================================
   - !Component
     name: input_buffer
-    <<<: [*component_defaults, *keep_inputs, *no_coalesce]
+    <<<: [*component_defaults, *keep_inputs]
     subclass: sram
     attributes:
       depth: 2048
       width: ENCODED_INPUT_BITS
-      n_banks: N_DPTC * TILING_FACTOR
+      n_banks: N_DPTC
 
   # ====================================================
   # digital compute (replacing photonic multipliers)
@@ -105,15 +105,21 @@ architecture:
     <<<: [*component_defaults, *keep_inputs, *keep_weights, *no_coalesce]
     subclass: aladdin_multiplier
     attributes:
-      datawidth: ENCODED_INPUT_BITS
       width: ENCODED_INPUT_BITS
-      width_a: ENCODED_INPUT_BITS
       width_b: ENCODED_WEIGHT_BITS
-      n_instances: N_DPTC * N_WAVELENGTHS
+      n_instances: N_DPTC 
 
   # ====================================================
   # digital adder tree (replacing photodetection/accumulation)
   # ====================================================
+  - !Component
+    name: accumulation_unit
+    <<<: [*component_defaults, *keep_outputs, *no_coalesce]
+    subclass: aladdin_adder
+    attributes:
+      width: ENCODED_OUTPUT_BITS
+      n_instances: N_DPTC
+  
   - !Component
     name: adder_tree
     <<<: [*component_defaults, *keep_outputs, *no_coalesce]
@@ -121,14 +127,6 @@ architecture:
     attributes:
       n_bits: ENCODED_OUTPUT_BITS
       n_adder_tree_inputs: N_WAVELENGTHS
-      n_instances: N_DPTC
-
-  - !Component
-    name: accumulation_unit
-    <<<: [*component_defaults, *keep_outputs, *no_coalesce]
-    subclass: aladdin_adder
-    attributes:
-      width: ENCODED_OUTPUT_BITS
       n_instances: N_DPTC
 
   # ====================================================
